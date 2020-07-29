@@ -24,19 +24,15 @@ def trigger_agent_pipeline(
 
     args["DEPLOY_AGENT"] = "true"
 
-    # The build tag appended to all released binaries
     if release_version_6 is not None:
         args["RELEASE_VERSION_6"] = release_version_6
 
-    # Override the environment to release the binaries to (prod or staging)
     if release_version_7 is not None:
         args["RELEASE_VERSION_7"] = release_version_7
 
-    # Override the environment to release the binaries to (prod or staging)
     if branch is not None:
         args["DEB_RPM_BUCKET_BRANCH"] = branch
 
-    # Override the environment to release the binaries to (prod or staging)
     if windows_update_latest is not None:
         args["WINDOWS_DO_NOT_UPDATE_LATEST"] = str(not windows_update_latest).lower()
 
@@ -132,8 +128,8 @@ def pipeline_status(gitlab, proj, pipeline_id, job_status):
         page += 1
 
     job_status = update_job_status(jobs, job_status)
-    # check pipeline status
 
+    # Check pipeline status
     pipeline = gitlab.pipeline(proj, pipeline_id)
     pipestatus = pipeline["status"].lower().strip()
     ref = pipeline["ref"]
