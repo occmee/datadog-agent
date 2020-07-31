@@ -10,6 +10,7 @@ package orchestrator
 import (
 	model "github.com/DataDog/agent-payload/process"
 	"github.com/DataDog/datadog-agent/pkg/process/util/orchestrator"
+	"github.com/DataDog/datadog-agent/pkg/util/log"
 
 	v1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -109,6 +110,7 @@ func extractService(s *corev1.Service) *model.Service {
 		}
 
 		for _, ingress := range s.Status.LoadBalancer.Ingress {
+			log.Debugf("Service ingress: %s", ingress.IP)
 			if ingress.Hostname != "" {
 				message.Status.LoadBalancerIngress = append(message.Status.LoadBalancerIngress, ingress.Hostname)
 			} else if ingress.IP != "" {
